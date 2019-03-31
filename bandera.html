@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chile</title>
+    <style>
+        /*NOTA para que funcione se debe abrir la pestaña
+        minimizada (se vera la estrella en el centro) al
+        colocar la ventana completa la estrella quedara
+        en el lugar que le corresponde*/
+        body{background: white;}
+        canvas{
+            margin: -110px -20px;
+            position: absolute;
+			left: 0;
+			top: 0;
+			height: solid 60%;
+            width: solid 60%;
+            transform: rotateZ(-17deg);
+            
+        }
+        
+        .container{
+            display: grid;
+            grid-template-columns: 35% 65%;
+            /*grid-template-columns: 1fr 2fr;
+            /*grid-template-rows: 1fr 1fr 2fr;*/
+        }
+        .box3{
+            grid-column: 1/3;
+            background: red;
+            height: 01%;
+        }
+        .box2{
+            color: white;
+        }
+        .box1{
+            background-color: rgb(20, 20, 143);
+            
+        }
+        .box{
+            
+            padding: 20%;
+            color:black;
+            
+        }
+        
+    </style>
+    
+</head>
+<body>
+        <canvas id="lienzo"></canvas>
+    <div class="container">
+        <div class="box box1"></div>
+        <div class="box box2"></div>
+        <div class="box box3"></div>
+    </div>
+</body>
+<script>
+        var ctx;
+        var cv;
+        var cx;
+        var cy;
+        var innerRadius = 50;
+        var outerRadius = 100;
+        var numberOfPoints = 10;
+        var f;
+        function drawStar() {
+            var alt = false;
+            var r;
+            var delta;
+            var x, y;
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#ffffff';
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            for (var i = 0; i < numberOfPoints; i++) {
+                if (alt === true) {
+                    r = innerRadius;
+                    alt = false;
+                } else {
+                    r = outerRadius;
+                    alt = true;
+                }
+                delta = i * f;
+                x = r * Math.cos(delta) + cx;
+                y = r * Math.sin(delta) + cy;
+                ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+        }
+        window.onload = function() {
+            cv = document.getElementById('lienzo');
+            ctx = cv.getContext('2d');
+            cv.width = window.innerWidth;
+            cv.height = window.innerHeight;
+            f = (Math.PI * 2) / numberOfPoints;
+            cx = cv.offsetWidth / 2;
+            cy = cv.offsetHeight / 2;
+            drawStar();
+        }
+    </script>
+</html>
